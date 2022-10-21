@@ -32,18 +32,18 @@ figures/national_gender_plt.png: .created-dirs \
 # Inputs are clean risk factor and legislation data
 # Outputs figure to figures direcotry
 figures/nc_phys_legislation.png: .created-dirs \
-	derived_data/clean_obesity_risk_factors.csv \
-	derived_data/clean_legislation.csv \
-	nc_physical_activity_exploration.R
+  derived_data/clean_obesity_risk_factors.csv \
+  derived_data/clean_legislation.csv \
+  nc_physical_activity_exploration.R
 	Rscript nc_physical_activity_exploration.R
 	
 # Plot obesity in NC with legislation
 # Inputs are clean risk factor and legislation data
 # Outputs figure to figures directory
 figures/nc_obesity_leg.png: .created-dirs \
-	derived_data/clean_obesity_risk_factors.csv \
-	derived_data/clean_legislation.csv \
-	nc_obesity_legislation_exploration.R
+  derived_data/clean_obesity_risk_factors.csv \
+  derived_data/clean_legislation.csv \
+  nc_obesity_legislation_exploration.R
 	Rscript nc_obesity_legislation_exploration.R
 	
 # PCA and LM to predict obesity from stratifications
@@ -53,9 +53,17 @@ figures/nc_obesity_leg.png: .created-dirs \
 # Also runs a linear model without PCA, which showed many more significant variables, such has fruit consumption
 # Outputs plot of fruit consumption against obesity rate too 
 figures/perc_obesity_pca.png figures/perc_obesity_fruit.png: .created-dirs \
-	derived_data/clean_obesity_risk_factors.csv \
-	pca_exploration.R
+  derived_data/clean_obesity_risk_factors.csv \
+  pca_exploration.R
 	Rscript pca_exploration.R
+	
+# Plot income against physical activity and weight classification rates
+# Inputs are clean risk factor data
+# Outputs bar plot in figures directory
+figures/income_phys_plt.png: .created-dirs \
+  derived_data/clean_obesity_risk_factors.csv \
+  income_exploration.R
+	Rscript income_exploration.R
 
 # Build final report as pdf
 report.pdf: .created-dirs \
@@ -63,5 +71,6 @@ report.pdf: .created-dirs \
   figures/nc_phys_legislation.png \
   figures/nc_obesity_leg.png \
   figures/perc_obesity_fruit.png \
+  figures/income_phys_plt.png \
   report.tex
 	pdflatex report.tex
