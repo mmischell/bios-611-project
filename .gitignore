@@ -7,5 +7,7 @@ derived_data/
 figures/
 report.log
 report.aux
+report.out
+report.pdf
 .bash_history
 
