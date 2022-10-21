@@ -2,3 +2,5 @@
 .config
 .local
 exploration.R
+.created-dirs
+derived_data/
