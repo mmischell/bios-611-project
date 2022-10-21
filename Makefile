@@ -21,8 +21,8 @@ derived_data/clean_obesity_risk_factors.csv derived_data/clean_legislation.csv: 
 # Plot obesity by gender in US
 figures/national_gender_plt.png: .created-dirs \
   derived_data/clean_obesity_risk_factors.csv \
-  explore_gender.R
-	Rscript explore_gender.R
+  gender_exploration.R
+	Rscript gender_exploration.R
 	
 # Plot physical activity in NC with legislation 
 figures/nc_phys_legislation.png: .created-dirs \
@@ -35,8 +35,8 @@ figures/nc_phys_legislation.png: .created-dirs \
 figures/nc_obesity_leg.png: .created-dirs \
 	derived_data/clean_obesity_risk_factors.csv \
 	derived_data/clean_legislation.csv \
-	exploration_nc_obesity_legislation.R
-	Rscript exploration_nc_obesity_legislation.R
+	nc_obesity_legislation_exploration.R
+	Rscript nc_obesity_legislation_exploration.R
 	
 # PCA and LM to predict obesity from stratifications
 figures/perc_obesity_pca.png figures/perc_obesity_fruit.png: .created-dirs \
