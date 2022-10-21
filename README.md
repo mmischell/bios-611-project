@@ -17,7 +17,7 @@ Then run the container and start an Rstudio server using:
 docker run -v $(pwd):/home/rstudio  -p 8787:8787 -e PASSWORD=pwd -it 611-final
 ```
 
-Navigate to localhost:8787 via a browser to access the development environment. 
+Navigate to localhost:8787 via a browser to access the development environment. Sign in with username rstudio and passoword pwd. 
 
 # Building the report
 The entrypoint for this project is the Makefile, which describes how to run the project and generate the report. 
