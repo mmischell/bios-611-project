@@ -49,5 +49,8 @@ figures/perc_obesity_pca.png figures/perc_obesity_fruit.png: .created-dirs \
 report.pdf: .created-dirs \
   figures/national_gender_plt.png \
   figures/nc_phys_legislation.png \
+  figures/nc_obesity_leg.png \
+  figures/perc_obesity_pca.png \
+  figures/perc_obesity_fruit.png \
   report.tex
 	pdflatex report.tex
