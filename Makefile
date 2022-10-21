@@ -30,6 +30,13 @@ figures/nc_phys_legislation.png: .created-dirs \
 	derived_data/clean_legislation.csv \
 	nc_physical_activity_exploration.R
 	Rscript nc_physical_activity_exploration.R
+	
+# Plot obesity in NC with legislation 
+figures/nc_obesity_leg.png: .created-dirs \
+	derived_data/clean_obesity_risk_factors.csv \
+	derived_data/clean_legislation.csv \
+	exploration_nc_obesity_legislation.R
+	Rscript exploration_nc_obesity_legislation.R
 
 # Build final report as pdf
 report.pdf: .created-dirs \
