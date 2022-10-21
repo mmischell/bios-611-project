@@ -11,7 +11,13 @@ clean:
 	mkdir -p derived_data
 	touch .created-dirs
 
+# Clean and prepare data for analysis and visualization
 derived_data/clean_obesity_risk_factors.csv derived_data/clean_legislation.csv: .created-dirs \
   source_data/Nutrition__Physical_Activity__and_Obesity_-_Behavioral_Risk_Factor_Surveillance_System.csv \
   source_data/CDC_Nutrition__Physical_Activity__and_Obesity_-_Legislation.csv
 	Rscript tidy_data.R
+
+# Plot obesity by gender in US
+figures/national_gender_plt.png: .created-dirs \
+  derived_data/clean_obesity_risk_factors.csv
+	Rscript explore_gender.R
