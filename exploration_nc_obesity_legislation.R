@@ -7,7 +7,7 @@ nc_obesity <- df %>%
   filter(
     (locationabbr == 'NC') & 
       (stratificationcategoryid1 == 'OVR') & 
-      (question == 'Percent of adults aged 18 years and older who have an overweight classification')
+      (question == 'Percent of adults aged 18 years and older who have obesity')
   )
 
 # Bring in legislative data
