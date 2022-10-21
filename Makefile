@@ -39,7 +39,7 @@ figures/nc_obesity_leg.png: .created-dirs \
 	Rscript exploration_nc_obesity_legislation.R
 	
 # PCA and LM to predict obesity from stratifications
-figures/perc_obesity_pca.png: .created-dirs \
+figures/perc_obesity_pca.png figures/perc_obesity_fruit.png: .created-dirs \
 	derived_data/clean_obesity_risk_factors.csv \
 	derived_data/clean_legislation.csv \
 	pca_exploration.R

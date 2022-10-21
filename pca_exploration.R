@@ -89,3 +89,16 @@ ggsave("figures/perc_obesity_pca.png", pca_plt)
 joined <- obesity_percs %>% 
   inner_join(df_wide, by=c('locationabbr', 'stratification1'))
 
+names(joined) <- tolower(gsub("[ ,-]", "_", names(joined))) # TODO: move to tidy_data.R
+names(joined) <- tolower(gsub("[(,)]", "_", names(joined)))
+explanatory <- joined %>% select(-perc_adults_with_obesity) %>% names()
+formula <- as.formula(sprintf("perc_adults_with_obesity ~ %s", paste(explanatory, collapse=" + ")));
+
+model <- lm(formula, joined)
+summary(model)
+# Lots of significant variables here... 
+
+# Plot obesity percent against fruit consumption
+viz_data <- joined %>% select(percent_of_adults_who_report_consuming_fruit_less_than_one_time_daily, perc_adults_with_obesity) %>% na.omit()
+fruit_plt <- ggplot(viz_data, aes(percent_of_adults_who_report_consuming_fruit_less_than_one_time_daily, perc_adults_with_obesity)) + geom_point()
+ggsave("figures/perc_obesity_fruit.png", fruit_plt)
