@@ -5,3 +5,7 @@ exploration.R
 .created-dirs
 derived_data/
 figures/
+report.log
+report.aux
+.bash_history
+
