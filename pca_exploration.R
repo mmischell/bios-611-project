@@ -51,7 +51,6 @@ formula <- as.formula(sprintf("perc_adults_with_obesity ~ %s", paste(explanatory
 
 model <- lm(formula, joined)
 summary(model)
-# Lots of significant variables here... 
 
 # Plot obesity percent against fruit consumption
 viz_data <- joined %>% select(percent_of_adults_who_report_consuming_fruit_less_than_one_time_daily, perc_adults_with_obesity) %>% na.omit()
