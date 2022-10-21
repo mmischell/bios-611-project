@@ -49,6 +49,7 @@ figures/nc_obesity_leg.png: .created-dirs \
 # PCA and LM to predict obesity from stratifications
 # Inputs are clean risk factor data
 # Performs PCA and a linear model and outputs a plot of a significant component against obesity rate
+# Removed PCA for now, because may not return same results every time
 # Also runs a linear model without PCA, which showed many more significant variables, such has fruit consumption
 # Outputs plot of fruit consumption against obesity rate too 
 figures/perc_obesity_pca.png figures/perc_obesity_fruit.png: .created-dirs \
@@ -61,7 +62,6 @@ report.pdf: .created-dirs \
   figures/national_gender_plt.png \
   figures/nc_phys_legislation.png \
   figures/nc_obesity_leg.png \
-  figures/perc_obesity_pca.png \
   figures/perc_obesity_fruit.png \
   report.tex
 	pdflatex report.tex
