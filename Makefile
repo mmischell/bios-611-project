@@ -20,13 +20,18 @@ derived_data/clean_obesity_risk_factors.csv derived_data/clean_legislation.csv: 
   tidy_data.R
 	Rscript tidy_data.R
 
-# Plot obesity by gender in US
+# Plot obesity by demographic data in US
 # Inputs are cleaned risk factor data 
-# Outputs figure to figures directory
-figures/national_gender_plt.png: .created-dirs \
+# Outputs figures by demographic to figures directory
+figures/national_gender_plt.png \
+figures/income_phys_plt.png \
+figures/income_time_plt.png \
+figures/race_time_plt.png \
+figures/age_time_plt.png \
+figures/edu_time_plt.png: .created-dirs \
   derived_data/clean_obesity_risk_factors.csv \
-  gender_exploration.R
-	Rscript gender_exploration.R
+  demographic_exploration.R
+	Rscript demographic_exploration.R
 	
 # Plot physical activity in NC with legislation 
 # Inputs are clean risk factor and legislation data
@@ -57,14 +62,6 @@ figures/perc_obesity_pca.png figures/perc_obesity_fruit.png: .created-dirs \
   pca_exploration.R
 	Rscript pca_exploration.R
 	
-# Plot income against physical activity and weight classification rates
-# Inputs are clean risk factor data
-# Outputs bar plot in figures directory
-figures/income_phys_plt.png: .created-dirs \
-  derived_data/clean_obesity_risk_factors.csv \
-  income_exploration.R
-	Rscript income_exploration.R
-
 # Build final report as pdf
 report.pdf: .created-dirs \
   figures/national_gender_plt.png \
@@ -72,5 +69,10 @@ report.pdf: .created-dirs \
   figures/nc_obesity_leg.png \
   figures/perc_obesity_fruit.png \
   figures/income_phys_plt.png \
+  figures/national_gender_plt.png \
+  figures/race_time_plt.png \
+  figures/edu_time_plt.png \
+  figures/age_time_plt.png \
+  figures/income_time_plt.png \
   report.tex
 	pdflatex report.tex
