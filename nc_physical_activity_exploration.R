@@ -25,6 +25,9 @@ nc_pa_leg <- leg_df %>%
 
 
 plt <- ggplot(nc_pa, aes(yearstart, data_value)) + geom_line() + 
-  geom_vline(xintercept = nc_pa_leg$yearstart, color='red')
+  geom_vline(xintercept = nc_pa_leg$yearstart, color='red') + 
+  scale_x_continuous(breaks=seq(min(nc_pa$yearstart),max(nc_pa$yearstart)))
 
 ggsave("figures/nc_phys_legislation.png", plt)
+
+

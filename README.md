@@ -25,7 +25,7 @@ Navigate to localhost:8787 via a browser to access the development environment. 
 
 Alternatively, if you are just interested in building the final report, run: 
 ```
-docker run -v $(pwd):/home/rstudio  --user="rstudio" --workdir="/home/rstudio/" -t 611-final make report.pdf
+docker run -v $(pwd):/home/rstudio  --user="rstudio" --workdir="/home/rstudio/" --rm -t 611-final make report.pdf
 ```
 
 # Project Organization

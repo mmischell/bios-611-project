@@ -12,5 +12,8 @@ nat_gen <- df %>%
   ) %>%
   arrange(yearstart)
 
-nat_gender_plt <- ggplot(nat_gen, aes(yearstart, data_value)) + geom_line(aes(color=gender))
+nat_gender_plt <- ggplot(nat_gen, aes(yearstart, data_value)) + 
+  geom_line(aes(color=gender)) + 
+  scale_x_continuous(breaks=seq(min(nat_gen$yearstart),max(nat_gen$yearstart)))
+
 ggsave("figures/national_gender_plt.png", nat_gender_plt)

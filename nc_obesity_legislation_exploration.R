@@ -22,7 +22,8 @@ nc_leg <- leg_df %>%
   )
 
 plt <- ggplot(nc_obesity, aes(yearstart, data_value)) + geom_line() + 
-  geom_vline(xintercept = nc_leg$yearstart, color='red')
+  geom_vline(xintercept = nc_leg$yearstart, color='red') + 
+  scale_x_continuous(breaks=seq(min(nc_obesity$yearstart),max(nc_obesity$yearstart)))
 
 ggsave("figures/nc_obesity_leg.png", plt)
 
