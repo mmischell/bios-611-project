@@ -10,4 +10,5 @@ report.aux
 report.out
 report.pdf
 .bash_history
-
+.cache
+*.pdf
