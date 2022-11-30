@@ -128,6 +128,22 @@ write_csv(pca_results, 'derived_data/clustering_data.csv')
 spectral_results <- read_csv("derived_data/spectral_clustering_labels.csv")
 state_clusters_spectral <- cbind(state_avgs$locationabbr, spectral_results$labels)
 
+# Plot for each year -- looking for clusters that change over time
+year <- min(df$yearstart)
+formatted_2011 <- formatted %>% filter(yearstart == year)
+pca_data <- state_avgs %>% select(-locationabbr) %>% replace(is.na(.), 0)
+results <- prcomp(pca_data)
+results
+summary(results)
+# Looks like to get ~90% variance, need about 7 or 8 components
+# Might not ever see anything plotting 2 dimensions
+
+
+# Plot first two components from PCA
+ggplot(results$x %>% as_tibble() %>% select(PC1, PC2), aes(PC1, PC2, label=state_avgs$locationabbr)) +
+  geom_point(aes(color=factor(state_avgs$locationabbr))) +
+  geom_text(hjust=0, vjust=0);
+
 
 # Questions/Notes:
 # How do I choose the number of clusters for k-means/spectral clustering? 

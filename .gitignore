@@ -12,3 +12,4 @@ report.pdf
 .bash_history
 .cache
 *.pdf
+.ipynb_checkpoints

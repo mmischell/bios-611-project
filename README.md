@@ -28,6 +28,11 @@ Alternatively, if you are just interested in building the final report, run:
 docker run -v $(pwd):/home/rstudio  --user="rstudio" --workdir="/home/rstudio/" --rm -t 611-final make report.pdf
 ```
 
+To run the bokeh.ipynb jupyter notebook, start the container with this: 
+```
+docker run -v $(pwd):/home/rstudio  -p 8787:8787 -p 8888:8888 -e PASSWORD=pwd --rm -it 611-final jupyter notebook --ip 0.0.0.0 --no-browser --allow-root
+```
+Then navigate to localhost:8888 in your browser and copy the token from your terminal when prompted.To access the notebook, navigate to `home/rstudio/bokeh.ipynb`.
 # Project Organization
 The entrypoint for this project is the Makefile, which describes the organization of this project, and how to build the final report and its dependencies. 
 

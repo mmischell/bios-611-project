@@ -7,4 +7,5 @@ RUN Rscript --no-restore --no-save -e "tinytex::tlmgr_install(c(\"etoolbox\",\"x
 RUN apt update && apt-get install -y openssh-server python3-pip
 RUN pip3 install --pre --user hy
 RUN pip3 install scikit-learn pandas
-RUN R -e "install.packages(\"reticulate\")";
+RUN R -e "install.packages(\"reticulate\")"
+RUN pip3 install jupyter jupyterlab bokeh jupyter_bokeh
