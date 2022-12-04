@@ -18,5 +18,5 @@ leg_df <- leg_df %>% rename(
 )
 
 # Save CSV
-write_csv(df, 'derived_data/clean_obesity_risk_factors.csv')
+write_csv(df, 'derived_data/clean_obesity_risk_factors.c(sv')
 write_csv(leg_df, 'derived_data/clean_legislation.csv')

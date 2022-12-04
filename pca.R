@@ -1,9 +1,12 @@
 library(tidyverse)
+library(imputeTS)
 set.seed(124)
 
 args <- commandArgs(trailingOnly=TRUE)
 suffix <- args[1]
 print(suffix)
+
+formatted <- read_csv('derived_data/pca_formatted.csv')
   
 subset_by_year <- function(y){
   states_year <- formatted %>% 
@@ -42,21 +45,6 @@ pca_plot_by_year <- function(y){
 
 df <- read_csv('derived_data/clean_obesity_risk_factors.csv')
 
-formatted <- df %>% 
-  filter(locationabbr != 'US') %>%
-  select(
-    yearstart
-    , locationabbr
-    , questionid
-    , data_value
-    , stratification1
-  ) %>%
-  pivot_wider(
-    id_cols=c(yearstart, locationabbr)
-    , names_from=c(questionid, stratification1)
-    , values_from=data_value
-    , values_fill=0
-  ) 
 
 if(suffix == 'avgs'){
   state_avgs <- formatted %>% 

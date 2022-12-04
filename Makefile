@@ -20,6 +20,13 @@ derived_data/clean_obesity_risk_factors.csv derived_data/clean_legislation.csv: 
   tidy_data.R
 	Rscript tidy_data.R
 
+# Format data for PCA
+# This includes imputing missing data
+derived_data/pca_formatted.csv: .created-dirs \
+  derived_data/clean_obesity_risk_factors.csv \
+  format_pca_data.R
+	Rscript format_pca_data.R
+
 # Plot obesity by demographic data in US
 # Inputs are cleaned risk factor data 
 # Outputs figures by demographic to figures directory
@@ -70,7 +77,7 @@ figures/perc_obesity_pca.png figures/perc_obesity_fruit.png: .created-dirs \
 derived_data/states_%.csv \
 derived_data/clustering_data_%.csv \
 figures/pca_plot_%.png: .created-dirs \
-  derived_data/clean_obesity_risk_factors.csv \
+  derived_data/pca_formatted.csv \
   pca.R
 	Rscript pca.R $*
 	
