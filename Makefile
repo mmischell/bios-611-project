@@ -67,71 +67,26 @@ figures/perc_obesity_pca.png figures/perc_obesity_fruit.png: .created-dirs \
 # Performs PCA starting with all questions. For states averaged across all years
 # as well as for a few individual years. Plot first two components for each. 
 # Outputs PCA results and plots. 
-derived_data/states_avgs.csv \
-derived_data/states_2011.csv \
-derived_data/states_2012.csv \
-derived_data/states_2016.csv \
-derived_data/states_2018.csv \
-derived_data/states_2020.csv \
-derived_data/clustering_data_state_avgs.csv \
-derived_data/clustering_data_2011.csv \
-derived_data/clustering_data_2012.csv \
-derived_data/clustering_data_2016.csv \
-derived_data/clustering_data_2018.csv \
-derived_data/clustering_data_2020.csv \
-figures/pca_plot_state_avgs.png \
-figures/pca_plot_2011.png \
-figures/pca_plot_2012.png \
-figures/pca_plot_2016.png \
-figures/pca_plot_2018.png \
-figures/pca_plot_2020.png: .created-dirs \
+derived_data/states_%.csv \
+derived_data/clustering_data_%.csv \
+figures/pca_plot_%.png: .created-dirs \
   derived_data/clean_obesity_risk_factors.csv \
   pca.R
-	Rscript pca.R
+	Rscript pca.R $*
 	
-# Spectral clustering
-derived_data/clustering_results_state_avgs.csv: .created-dirs \
-  derived_data/clustering_data_state_avgs.csv \
+# Spectral clustering for each year and state averages
+derived_data/clustering_results_%.csv: derived_data/clustering_data_%.csv \
+  .created-dirs \
   do_spectral_clustering.py
-	python3 do_spectral_clustering.py -f derived_data/clustering_data_state_avgs.csv \
-	-o derived_data/clustering_results_state_avgs.csv
-	
-# Spectral clustering for 2011
-derived_data/clustering_results_2011.csv: .created-dirs \
-  derived_data/clustering_data_2011.csv \
-  do_spectral_clustering.py
-	python3 do_spectral_clustering.py -f derived_data/clustering_data_2011.csv \
-	-o derived_data/clustering_results_2011.csv
+	python3 do_spectral_clustering.py -f $< -o $@
 
-# Spectral clustering for 2012
-derived_data/clustering_results_2012.csv: .created-dirs \
-  derived_data/clustering_data_2012.csv \
-  do_spectral_clustering.py
-	python3 do_spectral_clustering.py -f derived_data/clustering_data_2012.csv \
-	-o derived_data/clustering_results_2012.csv
-
-# Spectral clustering for 2016
-derived_data/clustering_results_2016.csv: .created-dirs \
-  derived_data/clustering_data_2016.csv \
-  do_spectral_clustering.py
-	python3 do_spectral_clustering.py -f derived_data/clustering_data_2016.csv \
-	-o derived_data/clustering_results_2016.csv
-
-# Spectral clustering for 2018
-derived_data/clustering_results_2018.csv: .created-dirs \
-  derived_data/clustering_data_2018.csv \
-  do_spectral_clustering.py
-	python3 do_spectral_clustering.py -f derived_data/clustering_data_2018.csv \
-	-o derived_data/clustering_results_2018.csv
-
-# Spectral clustering for 2020
-derived_data/clustering_results_2020.csv: .created-dirs \
-  derived_data/clustering_data_2020.csv \
-  do_spectral_clustering.py
-	python3 do_spectral_clustering.py -f derived_data/clustering_data_2020.csv \
-	-o derived_data/clustering_results_2020.csv
-
-
+# Plot clustering results
+figures/clustered_plot_%.png: .created-dirs \
+  derived_data/states_%.csv \
+  derived_data/clustering_data_%.csv \
+  derived_data/clustering_results_%.csv
+	Rscript spectral_clustering_results.R $*
+  
 
 # Build final report as pdf
 report.pdf: .created-dirs \

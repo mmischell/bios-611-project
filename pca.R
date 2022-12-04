@@ -1,6 +1,10 @@
 library(tidyverse)
 set.seed(124)
 
+args <- commandArgs(trailingOnly=TRUE)
+suffix <- args[1]
+print(suffix)
+  
 subset_by_year <- function(y){
   states_year <- formatted %>% 
     filter(yearstart == y) %>%
@@ -54,22 +58,20 @@ formatted <- df %>%
     , values_fill=0
   ) 
 
-# State Avgs
-state_avgs <- formatted %>% 
-  select(-yearstart) %>%
-  group_by(locationabbr) %>% 
-  summarise_all("mean", na.rm=T)
-write_csv(state_avgs, sprintf('derived_data/states_%s.csv', 'state_avgs'))
-
-# PCA
-results <- run_pca(state_avgs, 'state_avgs')
-plot_pca(state_avgs, results, 'state_avgs')
-
-pca_plot_by_year(2011)
-pca_plot_by_year(2012)
-pca_plot_by_year(2016)  
-pca_plot_by_year(2018) 
-pca_plot_by_year(2020) 
+if(suffix == 'avgs'){
+  state_avgs <- formatted %>% 
+    select(-yearstart) %>%
+    group_by(locationabbr) %>% 
+    summarise_all("mean", na.rm=T)
+  write_csv(state_avgs, sprintf('derived_data/states_%s.csv', suffix))
+  
+  # PCA
+  results <- run_pca(state_avgs, suffix)
+  plot_pca(state_avgs, results, suffix)
+} else {
+  y <- as.integer(suffix)
+  pca_plot_by_year(y)
+}
 
 
 # states_year <- formatted %>% 
