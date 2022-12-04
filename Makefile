@@ -91,14 +91,15 @@ figures/clustered_plot_%.png: .created-dirs \
 # Build final report as pdf
 report.pdf: .created-dirs \
   figures/national_gender_plt.png \
-  figures/nc_phys_legislation.png \
-  figures/nc_obesity_leg.png \
-  figures/perc_obesity_fruit.png \
-  figures/income_phys_plt.png \
-  figures/national_gender_plt.png \
+  figures/income_time_plt.png \
   figures/race_time_plt.png \
   figures/edu_time_plt.png \
   figures/age_time_plt.png \
-  figures/income_time_plt.png \
+  figures/clustered_plot_avgs.png \
+  figures/clustered_plot_2011.png \
+  figures/clustered_plot_2012.png \
+  figures/clustered_plot_2016.png \
+  figures/clustered_plot_2018.png \
+  figures/clustered_plot_2020.png \
   report.tex
 	pdflatex report.tex
