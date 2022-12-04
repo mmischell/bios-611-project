@@ -62,6 +62,32 @@ figures/perc_obesity_pca.png figures/perc_obesity_fruit.png: .created-dirs \
   pca_exploration.R
 	Rscript pca_exploration.R
 	
+	
+# PCA 
+# Performs PCA starting with all questions. For states averaged across all years
+# as well as for a few individual years. Plot first two components for each. 
+# Outputs PCA results and plots. 
+derived_data/states_2011.csv \
+derived_data/states_2012.csv \
+derived_data/states_2016.csv \
+derived_data/states_2018.csv \
+derived_data/states_2020.csv \
+derived_data/clustering_data_state_avgs.csv \
+derived_data/clustering_data_2011.csv \
+derived_data/clustering_data_2012.csv \
+derived_data/clustering_data_2016.csv \
+derived_data/clustering_data_2018.csv \
+derived_data/clustering_data_2020.csv \
+figures/pca_plot_state_avgs.png \
+figures/pca_plot_2011.png \
+figures/pca_plot_2012.png \
+figures/pca_plot_2016.png \
+figures/pca_plot_2018.png \
+figures/pca_plot_2020.png: .created-dirs \
+  derived_data/clean_obesity_risk_factors.csv \
+  pca.R
+	Rscript pca.R
+	
 # Build final report as pdf
 report.pdf: .created-dirs \
   figures/national_gender_plt.png \
