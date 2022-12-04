@@ -87,6 +87,22 @@ figures/clustered_plot_%.png: .created-dirs \
   derived_data/clustering_results_%.csv
 	Rscript spectral_clustering_results.R $*
   
+# Calculate mutual information for the clusters generated for each year
+# Idea is to see if there is a big change in the clustering over time
+# Outputs heatmap as illustration
+figures/mut_inf_heatmap.png: .created-dirs \
+  derived_data/states_2011.csv \
+  derived_data/clustering_results_2011.csv \
+  derived_data/states_2012.csv \
+  derived_data/clustering_results_2012.csv \
+  derived_data/states_2016.csv \
+  derived_data/clustering_results_2016.csv \
+  derived_data/states_2018.csv \
+  derived_data/clustering_results_2018.csv \
+  derived_data/states_2020.csv \
+  derived_data/clustering_results_2020.csv \
+  mutual_information.R
+	Rscript mutual_information.R
 
 # Build final report as pdf
 report.pdf: .created-dirs \
@@ -101,5 +117,6 @@ report.pdf: .created-dirs \
   figures/clustered_plot_2016.png \
   figures/clustered_plot_2018.png \
   figures/clustered_plot_2020.png \
+  figures/mut_inf_heatmap.png \
   report.tex
 	pdflatex report.tex

@@ -14,5 +14,3 @@ plt <- ggplot(pca_data %>% select(PC1, PC2), aes(PC1, PC2, label=state_data$loca
   guides(color = "none", size = "none")
 ggsave(sprintf("figures/clustered_plot_%s.png", suffix), plt)
 
-
-
