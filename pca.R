@@ -59,6 +59,7 @@ state_avgs <- formatted %>%
   select(-yearstart) %>%
   group_by(locationabbr) %>% 
   summarise_all("mean", na.rm=T)
+write_csv(state_avgs, sprintf('derived_data/states_%s.csv', 'state_avgs'))
 
 # PCA
 results <- run_pca(state_avgs, 'state_avgs')
