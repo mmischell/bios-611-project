@@ -100,14 +100,14 @@ figures/clustered_plot_%.png: .created-dirs \
 figures/mut_inf_heatmap.png: .created-dirs \
   derived_data/states_2011.csv \
   derived_data/clustering_results_2011.csv \
-  derived_data/states_2012.csv \
-  derived_data/clustering_results_2012.csv \
-  derived_data/states_2016.csv \
-  derived_data/clustering_results_2016.csv \
-  derived_data/states_2018.csv \
-  derived_data/clustering_results_2018.csv \
-  derived_data/states_2020.csv \
-  derived_data/clustering_results_2020.csv \
+  derived_data/states_2013.csv \
+  derived_data/clustering_results_2013.csv \
+  derived_data/states_2015.csv \
+  derived_data/clustering_results_2015.csv \
+  derived_data/states_2017.csv \
+  derived_data/clustering_results_2017.csv \
+  derived_data/states_2019.csv \
+  derived_data/clustering_results_2019.csv \
   mutual_information.R
 	Rscript mutual_information.R
 
@@ -120,10 +120,10 @@ report.pdf: .created-dirs \
   figures/age_time_plt.png \
   figures/clustered_plot_avgs.png \
   figures/clustered_plot_2011.png \
-  figures/clustered_plot_2012.png \
-  figures/clustered_plot_2016.png \
-  figures/clustered_plot_2018.png \
-  figures/clustered_plot_2020.png \
+  figures/clustered_plot_2013.png \
+  figures/clustered_plot_2015.png \
+  figures/clustered_plot_2017.png \
+  figures/clustered_plot_2019.png \
   figures/mut_inf_heatmap.png \
   report.tex
 	pdflatex report.tex

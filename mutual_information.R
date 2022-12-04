@@ -20,30 +20,30 @@ state_2011 <- read_csv(sprintf("derived_data/states_%s.csv", 2011))
 clustering_2011 <- read_csv(sprintf("derived_data/clustering_results_%s.csv", 2011))
 state_labels_2011 <- cbind(state_2011 %>% select(locationabbr), clustering_2011)
 
-state_2012 <- read_csv(sprintf("derived_data/states_%s.csv", 2012))
-clustering_2012 <- read_csv(sprintf("derived_data/clustering_results_%s.csv", 2012))
-state_labels_2012 <- cbind(state_2012 %>% select(locationabbr), clustering_2012)
+state_2013 <- read_csv(sprintf("derived_data/states_%s.csv", 2013))
+clustering_2013 <- read_csv(sprintf("derived_data/clustering_results_%s.csv", 2013))
+state_labels_2013 <- cbind(state_2013 %>% select(locationabbr), clustering_2013)
 
-state_2016 <- read_csv(sprintf("derived_data/states_%s.csv", 2016))
-clustering_2016 <- read_csv(sprintf("derived_data/clustering_results_%s.csv", 2016))
-state_labels_2016 <- cbind(state_2016 %>% select(locationabbr), clustering_2016)
+state_2015 <- read_csv(sprintf("derived_data/states_%s.csv", 2015))
+clustering_2015 <- read_csv(sprintf("derived_data/clustering_results_%s.csv", 2015))
+state_labels_2015 <- cbind(state_2015 %>% select(locationabbr), clustering_2015)
 
-state_2018 <- read_csv(sprintf("derived_data/states_%s.csv", 2018))
-clustering_2018 <- read_csv(sprintf("derived_data/clustering_results_%s.csv", 2018))
-state_labels_2018 <- cbind(state_2018 %>% select(locationabbr), clustering_2018)
+state_2017 <- read_csv(sprintf("derived_data/states_%s.csv", 2017))
+clustering_2017 <- read_csv(sprintf("derived_data/clustering_results_%s.csv", 2017))
+state_labels_2017 <- cbind(state_2017 %>% select(locationabbr), clustering_2017)
 
-state_2020 <- read_csv(sprintf("derived_data/states_%s.csv", 2020))
-clustering_2020 <- read_csv(sprintf("derived_data/clustering_results_%s.csv", 2020))
-state_labels_2020 <- cbind(state_2020 %>% select(locationabbr), clustering_2020)
+state_2019 <- read_csv(sprintf("derived_data/states_%s.csv", 2019))
+clustering_2019 <- read_csv(sprintf("derived_data/clustering_results_%s.csv", 2019))
+state_labels_2019 <- cbind(state_2019 %>% select(locationabbr), clustering_2019)
 
 joined <- state_labels_2011 %>% 
-  inner_join(state_labels_2012, by='locationabbr', suffix=c('2011','2012')) %>%
-  inner_join(state_labels_2016, by='locationabbr', suffix=c('','2016')) %>%
-  rename(labels2016=labels) %>%
-  inner_join(state_labels_2018, by='locationabbr', suffix=c('','2018')) %>% 
-  rename(labels2018=labels) %>%
-  inner_join(state_labels_2020, by='locationabbr', suffix=c('','2020')) %>%
-  rename(labels2020=labels)
+  inner_join(state_labels_2013, by='locationabbr', suffix=c('2011','2013')) %>%
+  inner_join(state_labels_2015, by='locationabbr', suffix=c('','2015')) %>%
+  rename(labels2015=labels) %>%
+  inner_join(state_labels_2017, by='locationabbr', suffix=c('','2017')) %>% 
+  rename(labels2017=labels) %>%
+  inner_join(state_labels_2019, by='locationabbr', suffix=c('','2019')) %>%
+  rename(labels2019=labels)
 
 get_mut_inf <- function(c1, c2){
   a <- joined[,c1]
@@ -51,13 +51,13 @@ get_mut_inf <- function(c1, c2){
   normalized_mutinf(a, b)
 }
 
-years <- c(2011, 2012, 2016, 2018, 2020)
+years <- c(2011, 2013, 2015, 2017, 2019)
 mut_infs <- as_tibble(t(combn(years,2)))
 mut_infs <- mut_infs %>%
   mutate(c1 = paste0('labels', V1), c2=paste0('labels', V2))
 mut_infs$mut_inf <- mapply(get_mut_inf, mut_infs$c1, mut_infs$c2)
-mut_infs$V1 <- factor(mut_infs$V1, levels=c(2011,2012,2016,2018,2020))
-mut_infs$V2 <- factor(mut_infs$V2, levels=c(2011,2012,2016,2018,2020))
+mut_infs$V1 <- factor(mut_infs$V1, levels=years)
+mut_infs$V2 <- factor(mut_infs$V2, levels=years)
 
 plt <- ggplot(mut_infs, aes(V1, V2, fill= mut_inf)) + 
   geom_tile()
