@@ -23,9 +23,10 @@ run_pca <- function(data, label){
   pca_data <- data %>% select(-locationabbr) %>% replace(is.na(.), 0)
   pca_data <- pca_data[,apply(pca_data, 2, var, na.rm=TRUE) != 0]
   results <- prcomp(pca_data, scale=T, center=T)
-  pca_results <- results$x %>% as_tibble() %>% select(PC1, PC2, PC3, PC4, PC5, PC6, PC7, PC8, PC9)
+  pca_results <- results$x %>% as_tibble() %>% 
+    select(PC1:PC20)
   write_csv(pca_results, sprintf('derived_data/clustering_data_%s.csv', label))
-  
+  print(summary(results))
   results
 }
 
