@@ -60,5 +60,8 @@ mut_infs$V1 <- factor(mut_infs$V1, levels=years)
 mut_infs$V2 <- factor(mut_infs$V2, levels=years)
 
 plt <- ggplot(mut_infs, aes(V1, V2, fill= mut_inf)) + 
-  geom_tile()
-ggsave("figures/mut_inf_heatmap.png", plt)
+  geom_tile() + 
+  ggtitle("Normalized Mutual Information for Clustering Per Year") +
+  xlab("Year") + ylab("Year") + 
+  guides(fill=guide_legend(title="Normalize Mutual Information"))
+ggsave("figures/mut_inf_heatmap.png", plt) 

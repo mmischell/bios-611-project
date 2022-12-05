@@ -9,6 +9,7 @@ report.log
 report.aux
 report.out
 report.pdf
+report_scrap.tex
 .bash_history
 .cache
 *.pdf

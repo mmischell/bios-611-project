@@ -8,9 +8,12 @@ state_data <- read_csv(sprintf("derived_data/states_%s.csv", suffix))
 pca_data <- read_csv(sprintf("derived_data/clustering_data_%s.csv", suffix))
 results <- read_csv(sprintf("derived_data/clustering_results_%s.csv", suffix))
 
+if(suffix=='avgs'){title<-"State Averages"}else{title<-suffix}
+
 plt <- ggplot(pca_data %>% select(PC1, PC2), aes(PC1, PC2, label=state_data$locationabbr)) +
   geom_point(aes(color=factor(results$labels))) +
   geom_text(hjust=0, vjust=0) + 
-  guides(color = "none", size = "none")
+  guides(color = "none", size = "none") +
+  ggtitle(sprintf("Clustered PCA Results %s", title)) 
 ggsave(sprintf("figures/clustered_plot_%s.png", suffix), plt)
 

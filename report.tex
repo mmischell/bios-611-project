@@ -7,6 +7,9 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{hyperref}
+\makeatletter
+\newcommand{\citeprocitem}[2]{\hyper@linkstart{cite}{citeproc_bib_item_#1}#2\hyper@linkend}
+\makeatother
 
 \title{Exploration of Obesity and its Risk Factors}
 \author{Melissa Mischell}
@@ -15,37 +18,82 @@
 \begin{document}
 \maketitle
 
-\begin{figure}[hp]
-\includegraphics[width=.45\linewidth]{./figures/national_gender_plt.png}
-\includegraphics[width=.45\linewidth]{./figures/income_time_plt.png}
-\includegraphics[width=.45\linewidth]{./figures/race_time_plt.png}
-\includegraphics[width=.45\linewidth]{./figures/edu_time_plt.png}
-\includegraphics[width=.45\linewidth]{./figures/age_time_plt.png}
+\subsection{Introduction}
+According to the CDC, Obesity is a common and series disease in the US that does not affect everyone equally and has recently been increasing in prevalence (\citeprocitem{1}{CDC - Obesity, Race/Ethnicity and COVID-19}). To stop or reverse the trend, it is important to examine who is most severely effected, what factors specifically put this population at risk, and how prevantative measures previously taken have worked.
+
+Over the course of ten years, the CDC conducted a nationwide survey gauging behavioral risk factors and obesity rates across demographic and geographic stratifications . In this analysis, I explore the Nutrition, Physical Activity, and Obesity – Behavioral Risk Factor Surveillance System dataset provided by the CDC (\citeprocitem{2}{Centers for Disease Control and Prevention}). This dataset contains aggregated survey responses to telephone-based interviews conducted from 2011 to 2020. The questions asked related to diet, physical activity, and weight status. The responses have been aggregated by various demographic stratifications, including age, gender, race, income, and education level.
+
+The questions examined in this analysis are how states compare in terms of their risk factors and obesity rates, and how the comparison changed over time. I hypothesized that there would be distinct clusters of states at any point in time, due to lifestyle distinctions between regions, even while accounting for demographic differences. I also expected to see the clusters change over time, as states have experienced demographic and political shifts, so I wondered if these would be reflected in the survey responses.
+
+\subsection{Demographic Overview}
+Figure \ref{fig:dems_by_time} shows how obesity rates have changed across the United States for the demographic stratifications outlined by the CDC dataset. There are five stratification categories: age, education, gender, income, and race/ethnicity. Alarmingly, for nearly every population the obesity rate has increased, though at varying rates. There appear to be recents shifts toward higher obesity rates for women, Hawaiian/Pacific Islanders, and people with less than a high school level of education, which beg further investigation. In the following analysis, I examine how the demographic stratification interacts with geographic stratifications and specific behavioral risk factors.
+
+\begin{figure}[htbp]
+\includegraphics[width=.5\linewidth]{./figures/national_gender_plt.png}
+\includegraphics[width=.5\linewidth]{./figures/income_time_plt.png}
+\includegraphics[width=.5\linewidth]{./figures/race_time_plt.png}
+\includegraphics[width=.5\linewidth]{./figures/edu_time_plt.png}
+\includegraphics[width=.5\linewidth]{./figures/age_time_plt.png}
 \caption{
-  National obesity rates by gender, race, and education level over time. There appears to be a recent shift toward higher obesity rates for women, Hawaiian/Pacific Islanders, and people with less than high school level of education. 
+  National obesity rates by gender, income, race, education level, and age over time. There appears to be a recent shift toward higher obesity rates for women, Hawaiian/Pacific Islanders, and people with less than high school level of education. 
 }
 \label{fig:dems_by_time}
 \end{figure}
 
+\subsection{Dimensionality Reduction}
+In order to investigate whether states are clustered by their behavioral risk factors, the first step was to use Principle Component Analysis (PCA) to understand which stratifications and questions explained most of the variation between states. PCA is a dimensionality reduction technique that rotates data so that the dimensions that explain the most variance are aligned with the axes. There were many redunancies in the data, as one would expect the responses to many questions to be highly correlated. For example, how often does a population eat vegetables compared to how often they eat fruit. PCA helps to remove some of these redundancies.
+
+Before performing the PCA, I use imputation to deal with missing data. Where possible, I looked at each state and each demographics responses to each question by year, and imputed based on the responses to the other years.
+
+The two questions I was exploring were a) are there any clusters of states and b) has this changed over the last decade. To address each of these questions, I first averaged the responses per state across all years and performed the dimensionality reduction, and then performed PCA again for the years 2011, 2013, 2015, 2017, and 2019, so I could cluster each separately. 
+
+For each year, about ninety percent of the variability was explained by about twenty components (one-tenth of the columns). The first two components for the averages and for each year are plotted in Figures \ref{fig:clustered_avgs} and \ref{fig:clustered_data}, respectively, to get an idea how the states were distributed, though the first two components only explained about fifty percent of the variance.
+
 \begin{figure}[hp]
-\includegraphics[width=0.45\linewidth]{./figures/clustered_plot_avgs.png}
-\includegraphics[width=0.45\linewidth]{./figures/clustered_plot_2011.png}
-\includegraphics[width=0.45\linewidth]{./figures/clustered_plot_2013.png}
-\includegraphics[width=0.45\linewidth]{./figures/clustered_plot_2015.png}
-\includegraphics[width=0.45\linewidth]{./figures/clustered_plot_2017.png}
-\includegraphics[width=0.45\linewidth]{./figures/clustered_plot_2019.png}
+\includegraphics[width=0.6\linewidth]{./figures/clustered_plot_avgs.png}
 \caption{
-  Clustered state data over time.
+  Clustered state data, averaged over 2011-2020. The color indicate cluster label. The data is pretty evenly dispersed, so it is difficult to make out any clusters in two dimensions. 
+}
+\label{fig:clustered_avgs}
+\end{figure}
+
+\begin{figure}[hp]
+\includegraphics[width=0.5\linewidth]{./figures/clustered_plot_2011.png}
+\includegraphics[width=0.5\linewidth]{./figures/clustered_plot_2013.png}
+\includegraphics[width=0.5\linewidth]{./figures/clustered_plot_2015.png}
+\includegraphics[width=0.5\linewidth]{./figures/clustered_plot_2017.png}
+\includegraphics[width=0.5\linewidth]{./figures/clustered_plot_2019.png}
+\caption{
+  Clustered state data by year for years 2011, 2013, 2015, 2017, and 2019. Because PCA was run indepently for each year, they are not plotted on the same coordinate plane. The color indicates cluster label. There is some evidence of the clusters making sense in two dimensions.
 }
 \label{fig:clustered_data}
 \end{figure}
 
-\begin{figure}[hp]
-\includegraphics[width=0.45\linewidth]{./figures/mut_inf_heatmap.png}
+\subsection{Clustering}
+The next step was to cluster the reduced data. I used the Spectral Clustering algorithm, which is typically robust to clusters not characterized by their centroids (and it was not clear that these were). Again, I did this for both the data averaged across years and for the five individual years worth of data. 
+
+Although there were not clear clusters from the two-dimensional representations, trial and error led me to use four clusters. The results of the clustering for the averages by state are displayed in \ref{fig:clustered_avgs} and for each in figure \ref{fig:clustered_data}. Although these plots only show the first two components, I used the first twenty for the clustering. There is some distinction between clusters in several of the plots, suggesting that the clustering worked, though it is not immediately apparent due to the loss of information from reducing to two dimensions.
+
+\subsection{Mutual Information}
+To assess whether the clusters changed over time, I used normalized mutual information. The mutual information between the clusterings for each year of interest are shown in figure \ref{fig:mut_inf}. The lighter color indicates higher mutual information. From this, it does look like years close to each other generally had higher mutual infomation (years 2011 and 2019 had particularly low mutual information). However, the scores never get above about 0.3, meaning there was a lot of variability between the clusters year to year. 
+
+\begin{figure}[htbp]
+\includegraphics[width=0.8\linewidth]{./figures/mut_inf_heatmap.png}
 \caption{
-  Mututal information of clustering by time. 
+  Normalized Mututal information of clusterings for each year. Lighter color indicates higher mutual information. Generally, it appears that years farther apart in time have lower mutual information (for example, 2011 and 2019), but the mutual information is never above about 0.3
 }
 \label{fig:mut_inf}
 \end{figure}
+
+\subsection{Conclusion}
+There is some evidence that states are clustered by their behavioral risk factors for obesity, and that these clusters have changed over the past decade. Exploring these clusters further to find which states experienced trends or shifts could help guide policy and research efforts. The overall upward trend in nationwide obesity rates displayed in the nationwide demographics plots is concerning, and so it is worth exploring where to focus.
+
+It would also be interesting to study the original, unaggregated, data, to see how the aggregation by stratification influenced this data. It may have helped to account for demographic confounders, but it also may have hidden other factors. This data could also be interesting for the purposes of predicting weight status based on risk factors. The aggregated data also reported missing values when the sample size was small. I tried to account for this with imputation where possible, but further exploration into these repsonses could help. 
+
+\section{References}
+
+\hypertarget{citeproc_bib_item_1}{CDC - Obesity, Race/Ethnicity and COVID-19 \textit{\href{https://www.cdc.gov/obesity/data/obesity-and-covid-19.html}}}
+
+\hypertarget{citeproc_bib_item_2}{Centers for Disease Control and Prevention. Nutrition, Physical Activity, and Obesity - Behavioral Risk Factor Surveillance System. \textit{\href{https://chronicdata.cdc.gov/Nutrition-Physical-Activity-and-Obesity/Nutrition-Physical-Activity-and-Obesity-Behavioral/hn4x-zwk7}}}
 
 \end{document}
