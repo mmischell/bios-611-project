@@ -1,5 +1,5 @@
 library(tidyverse)
-library(rdist)
+# library(rdist)
 set.seed(124)
 
 formatted <- read_csv('derived_data/pca_formatted.csv')

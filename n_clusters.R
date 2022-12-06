@@ -41,5 +41,6 @@ for(n in 3:10){ # Loop through the number of clusters
 }
 
 plt <- ggplot(avg_mutual_infs, aes(n, mean.mutual_informations.)) + geom_point() +
-  ggtitle(sprintf("Mean Mutual Information for n Clusters, %s Data", y))
+  ggtitle(sprintf("Mean Mutual Information for n Clusters, %s Data", y)) +
+  xlab("Number of Clusters") + ylab("Mean Mutual Information")
 ggsave(sprintf("figures/n_clusters_mut_inf_%s.png", y), plt) 

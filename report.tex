@@ -7,24 +7,19 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{hyperref}
-\makeatletter
-\newcommand{\citeprocitem}[2]{\hyper@linkstart{cite}{citeproc_bib_item_#1}#2\hyper@linkend}
-\makeatother
 
 \title{Exploration of Obesity and its Risk Factors}
-\author{Melissa Mischell}
-\date{\today}
 
 \begin{document}
 \maketitle
 
 \subsection{Introduction}
-Over the course of ten years (2011-2020), the CDC conducted a nationwide survey assessing behavioral risk factors and obesity rates across demographic and geographic stratifications. In this analysis, I explore the aggregated results of this survey using the Nutrition, Physical Activity, and Obesity – Behavioral Risk Factor Surveillance System dataset provided by the CDC (\cite{dataset}). The question I investigate here is whether there are groups of states that have similar patterns related to weight status and obesity risk factors, and if this changes over time. 
+Over the course of ten years (2011-2020), the CDC conducted a nationwide survey assessing behavioral risk factors and obesity rates across demographic and geographic stratifications. In this analysis, I explore the aggregated results of this survey using the Nutrition, Physical Activity, and Obesity – Behavioral Risk Factor Surveillance System dataset provided by the CDC (https://chronicdata.cdc.gov/Nutrition-Physical-Activity-and-Obesity/Nutrition-Physical-Activity-and-Obesity-Behavioral/hn4x-zwk7). The question I investigate here is whether there are groups of states that have similar patterns related to weight status and obesity risk factors, and if this changes over time. 
 
 \subsection{Demographic Overview}
-Figure \ref{fig:dems_by_time} shows how obesity rates have changed across the United States for the demographic stratifications outlined by the CDC. There are five stratification categories: age, education, gender, income, and race/ethnicity. Alarmingly, for nearly every population the obesity rate has increased. There appear to be recents shifts toward higher obesity rates for women, Hawaiian/Pacific Islanders, and people with less than a high school level of education, which beg further investigation. In the following analysis, I examine how the demographic stratification interacts with geographic stratifications and specific behavioral risk factors.
+Figure \ref{fig:dems_by_time} shows how obesity rates have changed across the United States for the demographic stratifications outlined by the CDC. There are five stratification categories: age, education, gender, income, and race/ethnicity. Alarmingly, for nearly every population the obesity rate has increased. There appear to be recents shifts toward higher obesity rates for women, Hawaiian/Pacific Islanders, and people with less than a high school level of education, which beg further investigation.
 
-\begin{figure}[htbp]
+\begin{figure}[hp]
 \includegraphics[width=.5\linewidth]{./figures/national_gender_plt.png}
 \includegraphics[width=.5\linewidth]{./figures/income_time_plt.png}
 \includegraphics[width=.5\linewidth]{./figures/race_time_plt.png}
@@ -37,64 +32,57 @@ Figure \ref{fig:dems_by_time} shows how obesity rates have changed across the Un
 \end{figure}
 
 \subsection{Dimensionality Reduction}
-To see whether states are clustered by their behavioral risk factors, the first step was to use Principle Component Analysis (PCA) to understand which stratifications and questions explained most of the variation between states. As expected, there were many redunancies in the data, since the responses to many questions to be highly correlated. About ninety percent of the variability was explained by the first thirty-eight components, so those are what I used for clustering. The first two components are plotted in  \ref{fig:clustered_avgs} and \ref{fig:clustered_data}. The states move around year to year because each row of the data was identified by year and state, so for different years, states have different component vectors. It is interesting that most states appear not to move around too much, suggesting their principle components relative to the other states are fairly stable.
+To see whether states are clustered by their behavioral risk factors, the first step was to use Principle Component Analysis (PCA) to understand which stratifications and questions explained most of the variation between states. As expected, the responses to many questions see, to be highly correlated, so about ninety percent of the variability was explained by the first thirty-eight components, which are what I used for clustering. The first two components are plotted in  \ref{fig:clustered_avgs} and \ref{fig:clustered_data}. The states move around year to year because each row of the data was identified by year and state, so for different years, states have different component vectors. It is interesting that most states appear not to move around too much, suggesting their principle components relative to the other states are fairly stable.
 
 Before performing the PCA, I use imputation to deal with missing data. Where possible, I looked at each state and each demographics responses to each question by year, and imputed based on the responses to the other years.
 
-\begin{figure}[hp]
-\includegraphics[width=0.6\linewidth]{./figures/clustered_plot_avgs.png}
-\caption{
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.6\linewidth]{./figures/clustered_plot_avgs.png}
+\caption{\label{fig:clustered_avgs}
   Clustered state data, averaged over 2011-2020. Color indicates cluster label. The data is pretty evenly dispersed, so it is difficult to make out the clusters, but states near each other do seem to be clustered together.
 }
-\label{fig:clustered_avgs}
 \end{figure}
 
 \begin{figure}[hp]
-\includegraphics[width=0.5\linewidth]{./figures/clustered_plot_2011.png}
-\includegraphics[width=0.5\linewidth]{./figures/clustered_plot_2013.png}
-\includegraphics[width=0.5\linewidth]{./figures/clustered_plot_2015.png}
-\includegraphics[width=0.5\linewidth]{./figures/clustered_plot_2017.png}
-\includegraphics[width=0.5\linewidth]{./figures/clustered_plot_2019.png}
-\caption{
+\includegraphics[width=.5\linewidth]{./figures/clustered_plot_2011.png}
+\includegraphics[width=.5\linewidth]{./figures/clustered_plot_2013.png}
+\includegraphics[width=.5\linewidth]{./figures/clustered_plot_2015.png}
+\includegraphics[width=.5\linewidth]{./figures/clustered_plot_2017.png}
+\includegraphics[width=.5\linewidth]{./figures/clustered_plot_2019.png}
+\caption{\label{fig:clustered_data}
   Clustered state data by year for years 2011, 2013, 2015, 2017, and 2019. The color indicates cluster label. There is some evidence of the clusters making sense in two dimensions.
 }
-\label{fig:clustered_data}
 \end{figure}
 
 \subsection{Clustering}
 The next step was to cluster the reduced data. I used Spectral Clustering, which is typically more robust to clusters not characterized by their centroids. I did this for both the data averaged across years and for the five individual years worth of data. 
 
-To determine the number of clusters to use, I plotted the mean normalized mutual information obtained from rerunning the clustering algorithm multiple times with different numbers of clusters (e.g. Figure \ref{fig:n_clusters}. Using nine clusters, the clusters seemed reasonably stable. 
+To determine the number of clusters to use, I plotted the mean normalized mutual information obtained from rerunning the clustering algorithm multiple times with different numbers of clusters (e.g. Figure \ref{fig:n_clusters}). Using nine clusters, the clusters seemed reasonably stable. 
 
 The results of the clustering for the averages by state are displayed in Figure \ref{fig:clustered_avgs} and for each in Figure \ref{fig:clustered_data}. There is some distinction between clusters in several of the plots, though it is not immediately apparent, possibly due to the loss of information from plotting only two dimensions.
 
-In Figure \ref{fig:clustered_data}, it is not obvious whether the clusters stay consistent over time. For example, Colorado and California are clustered together year after year, but Washington D.C. is clustered with different states each year. 
+In Figure \ref{fig:clustered_data}, it is not obvious whether the clusters stay consistent over time. For example, Colorado and California are clustered together frequently, but Washington D.C. is clustered with different states each year. 
 
-\begin{figure}[hp]
-\includegraphics[width=0.8\linewidth]{./figures/n_clusters_mut_inf_2013.png}
-\caption{
-  This plot shows the mean normalized mututal information of clusterings for 2013. It appears that using about nine clusters results in relatively stable clusterings. There were similar results for the other years and state averages. 
-}
-\label{fig:n_clusters}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.6\linewidth]{./figures/n_clusters_mut_inf_2013.png}
+\caption{\label{fig:n_clusters} This plot shows the mean normalized mututal information of clusterings for 2013. It appears that using about nine clusters results in relatively stable clusterings. There were similar results for the other years and state averages.}
 \end{figure}
 
 \subsection{Mutual Information}
 To assess whether the clusters changed over time, I used normalized mutual information. The mutual information between the clusterings for each year of interest are shown in figure \ref{fig:mut_inf}. A lighter color indicates higher mutual information. From this, it does look like years close to each other generally had higher mutual infomation (years 2011 and 2019 had particularly low mutual information). However, the scores never get above about 0.5, meaning there was a lot of variability between the clusters year to year. 
 
-\begin{figure}[hp]
-\includegraphics[width=0.8\linewidth]{./figures/mut_inf_heatmap.png}
-\caption{
-  Normalized Mututal information of clusterings for each year. Lighter color indicates higher mutual information. Generally, it appears that years farther apart in time have lower mutual information (for example, 2011 and 2019), but the score is never above about 0.5.
-}
-\label{fig:mut_inf}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.6\linewidth]{./figures/mut_inf_heatmap.png}
+\caption{\label{fig:mut_inf} Normalized Mututal information of clusterings for each year. Lighter color indicates higher mutual information. Generally, it appears that years farther apart in time have lower mutual information (for example, 2011 and 2019), but the score is never above about 0.5.}
 \end{figure}
 
-\subsection{Conclusion}
-We have presented some evidence that states are clustered by their behavioral risk factors for obesity, and that these clusters have changed over the past decade. Exploring these clusters further to find which states experienced trends or shifts could help guide policy and research efforts. The CDC also provides a dataset on legislation related to obesity risk factors over an overlapping period (\cite{legislation}), so it would be interesting to explore whether policy had a substantial effect these clusters and on states' behaviors. 
- 
-\section{References}
 
-\bibliographystyle{plain} 
-\bibliography{refs}
+\subsection{Conclusion}
+We have presented some evidence that states are clustered by their behavioral risk factors for obesity, and that these clusters have changed over the past decade. Exploring these clusters further to find which states experienced trends or shifts could help guide policy and research efforts. The CDC also provides a dataset on legislation related to obesity risk factors over an overlapping period (https://chronicdata.cdc.gov/Nutrition-Physical-Activity-and-Obesity/CDC-Nutrition-Physical-Activity-and-Obesity-Legisl/nxst-x9p4), so it would be interesting to explore whether policy had a substantial effect these clusters and on states' behaviors. 
+ 
 
 \end{document}
