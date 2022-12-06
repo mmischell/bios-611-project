@@ -15,6 +15,7 @@ if args.n_clusters:
   out = f"derived_data/clustering_results_{args.suffix}.csv"
   clustering = SpectralClustering(n_clusters=args.n_clusters,
             assign_labels='discretize',
+            # affinity='precomputed',
             random_state=0).fit(data)
   print(clustering.labels_)
   df = pandas.DataFrame({"labels":clustering.labels_})
@@ -25,6 +26,7 @@ else:
     for i in range(5):
       clustering = SpectralClustering(n_clusters=n_clusters,
               assign_labels='discretize',
+              # affinity='precomputed',
               random_state=i).fit(data)
       print(clustering.labels_)
       df = pandas.DataFrame({"labels":clustering.labels_});

@@ -10,3 +10,4 @@ RUN pip3 install scikit-learn pandas
 RUN R -e "install.packages(\"reticulate\")"
 RUN pip3 install jupyter jupyterlab bokeh jupyter_bokeh
 RUN R -e "install.packages(\"imputeTS\")"
+RUN R -e "install.packages(\"rdist\")"

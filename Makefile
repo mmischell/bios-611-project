@@ -73,6 +73,7 @@ figures/pca_plot_%.png: .created-dirs \
 	
 # Spectral clustering for each year and state averages
 # Run each clustering with different numbers of clusters 5 times
+# Tried using precomputed affinity matrix, but the default kernal worked better
 derived_data/clustering_results_%_3_0.csv \
 derived_data/clustering_results_%_3_1.csv \
 derived_data/clustering_results_%_3_2.csv \

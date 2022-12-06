@@ -1,4 +1,5 @@
 library(tidyverse)
+library(rdist)
 set.seed(124)
 
 formatted <- read_csv('derived_data/pca_formatted.csv')
@@ -13,10 +14,16 @@ results_subset <- results$x %>% as_tibble() %>%
 
 # Subset data into averages and by year and write to csvs
 joined <- cbind(formatted %>% select(yearstart, locationabbr), results_subset)
+
 state_avgs <- joined %>% 
   select(-yearstart) %>%
   group_by(locationabbr) %>% 
   summarise_all("mean", na.rm=T)
+# dist_matrix <- pdist(state_avgs %>% select(-locationabbr))
+# ggplot(dist_matrix[upper.tri(dist_matrix)] %>% as_tibble(), aes(value)) + geom_density()
+# thresh <- 5
+# aff_matrix <- ifelse(dist_matrix <= thresh, 1, 0)
+# state_aff_data <- cbind(state_avgs %>% select(locationabbr), aff_matrix)
 write_csv(state_avgs, 'derived_data/states_avgs.csv')
 write_csv(state_avgs %>% select(-locationabbr), 'derived_data/clustering_data_avgs.csv')
 
@@ -25,6 +32,11 @@ for(y in years){
   year_pca_data <- joined %>%
     filter(yearstart == y) %>%
     select(-yearstart)
+  # dist_matrix <- pdist(year_pca_data %>% select(-locationabbr))
+  # ggplot(dist_matrix[upper.tri(dist_matrix)] %>% as_tibble(), aes(value)) + geom_density()
+  # thresh <- 5
+  # aff_matrix <- ifelse(dist_matrix <= thresh, 1, 0)
+  # year_aff_data <- cbind(year_pca_data %>% select(locationabbr), aff_matrix)
   write_csv(year_pca_data, sprintf('derived_data/states_%s.csv', y))
   write_csv(year_pca_data %>% select(-locationabbr), sprintf('derived_data/clustering_data_%s.csv', y))
 }
