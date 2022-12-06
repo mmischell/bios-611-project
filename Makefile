@@ -5,6 +5,9 @@ clean:
 	rm -rf derived_data
 	rm -rf .created-dirs
 	rm -f report.pdf
+	rm -f report.log
+	rm -f report.aux
+	rm -f report.out
 
 .created-dirs:
 	mkdir -p figures
@@ -195,6 +198,7 @@ figures/mut_inf_heatmap.png: .created-dirs \
 	Rscript mutual_information.R
 
 # Build final report as pdf
+# Run in draftmode first to fix refs
 report.pdf: .created-dirs \
   figures/national_gender_plt.png \
   figures/income_time_plt.png \
@@ -210,4 +214,5 @@ report.pdf: .created-dirs \
   figures/mut_inf_heatmap.png \
   figures/n_clusters_mut_inf_2013.png \
   report.tex
+	pdflatex report.tex -draftmode
 	pdflatex report.tex

@@ -35,8 +35,8 @@ gen_data <- df %>%
 ## twice-difference the gender obesity data
 fem_d2 <- diff(gen_data[gen_data$stratification1 == 'Female',]$data_value, differences = 1)
 male_d2 <- diff(gen_data[gen_data$stratification1 == 'Male',]$data_value, differences = 1)
-plot(fem_d2, ylab = expression("Female Obesity Rate"))
-plot(male_d2, ylab = expression("Male Obesity Rate"))
+# plot(fem_d2, ylab = expression("Female Obesity Rate"))
+# plot(male_d2, ylab = expression("Male Obesity Rate"))
 
 
 # Linear Regression to compare slopes
