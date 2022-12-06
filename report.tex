@@ -41,13 +41,9 @@ Figure \ref{fig:dems_by_time} shows how obesity rates have changed across the Un
 \end{figure}
 
 \subsection{Dimensionality Reduction}
-In order to investigate whether states are clustered by their behavioral risk factors, the first step was to use Principle Component Analysis (PCA) to understand which stratifications and questions explained most of the variation between states. PCA is a dimensionality reduction technique that rotates data so that the dimensions that explain the most variance are aligned with the axes. There were many redunancies in the data, as one would expect the responses to many questions to be highly correlated. For example, how often does a population eat vegetables compared to how often they eat fruit. PCA helps to remove some of these redundancies.
+In order to investigate whether states are clustered by their behavioral risk factors, the first step was to use Principle Component Analysis (PCA) to understand which stratifications and questions explained most of the variation between states. As expected, there were many redunancies in the data, since the responses to many questions to be highly correlated. For example, how often does a population eat vegetables compared to how often they eat fruit. About ninety percent of the variability was explained by the first thirty-eight components, so those are what I used for clustering. The first two components are plotted in  \ref{fig:clustered_avgs} and \ref{fig:clustered_data}. The states around year to year because each row of the data was identified by year and state, so for different years, states had different component vectors. It is interesting that most states appear not to move around too much, suggesting their principle components relative to the other states are fairly stable.
 
 Before performing the PCA, I use imputation to deal with missing data. Where possible, I looked at each state and each demographics responses to each question by year, and imputed based on the responses to the other years.
-
-The two questions I was exploring were a) are there any clusters of states and b) has this changed over the last decade. To address each of these questions, I first averaged the responses per state across all years and performed the dimensionality reduction, and then performed PCA again for the years 2011, 2013, 2015, 2017, and 2019, so I could cluster each separately. 
-
-For each year, about ninety percent of the variability was explained by about twenty components (one-tenth of the columns). The first two components for the averages and for each year are plotted in Figures \ref{fig:clustered_avgs} and \ref{fig:clustered_data}, respectively, to get an idea how the states were distributed, though the first two components only explained about fifty percent of the variance.
 
 \begin{figure}[hp]
 \includegraphics[width=0.6\linewidth]{./figures/clustered_plot_avgs.png}

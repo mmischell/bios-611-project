@@ -61,15 +61,15 @@ figures/nc_obesity_leg.png: .created-dirs \
 	Rscript nc_obesity_legislation_exploration.R
 	
 # PCA 
-# Performs PCA starting with all questions. For states averaged across all years
-# as well as for a few individual years. Plot first two components for each. 
-# Outputs PCA results and plots. 
+# Performs PCA starting with all questions and stratifications. 
+# Plot first two components. 
+# Outputs PCA results. 
 derived_data/states_%.csv \
 derived_data/clustering_data_%.csv \
 figures/pca_plot_%.png: .created-dirs \
   derived_data/pca_formatted.csv \
   pca.R
-	Rscript pca.R $*
+	Rscript pca.R
 	
 # Spectral clustering for each year and state averages
 derived_data/clustering_results_%.csv: derived_data/clustering_data_%.csv \
