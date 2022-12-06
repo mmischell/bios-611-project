@@ -72,10 +72,102 @@ figures/pca_plot_%.png: .created-dirs \
 	Rscript pca.R
 	
 # Spectral clustering for each year and state averages
+# Run each clustering with different numbers of clusters 5 times
+derived_data/clustering_results_%_3_0.csv \
+derived_data/clustering_results_%_3_1.csv \
+derived_data/clustering_results_%_3_2.csv \
+derived_data/clustering_results_%_3_3.csv \
+derived_data/clustering_results_%_3_4.csv \
+derived_data/clustering_results_%_4_0.csv \
+derived_data/clustering_results_%_4_1.csv \
+derived_data/clustering_results_%_4_2.csv \
+derived_data/clustering_results_%_4_3.csv \
+derived_data/clustering_results_%_4_4.csv \
+derived_data/clustering_results_%_5_0.csv \
+derived_data/clustering_results_%_5_1.csv \
+derived_data/clustering_results_%_5_2.csv \
+derived_data/clustering_results_%_5_3.csv \
+derived_data/clustering_results_%_5_4.csv \
+derived_data/clustering_results_%_6_0.csv \
+derived_data/clustering_results_%_6_1.csv \
+derived_data/clustering_results_%_6_2.csv \
+derived_data/clustering_results_%_6_3.csv \
+derived_data/clustering_results_%_6_4.csv \
+derived_data/clustering_results_%_7_0.csv \
+derived_data/clustering_results_%_7_1.csv \
+derived_data/clustering_results_%_7_2.csv \
+derived_data/clustering_results_%_7_3.csv \
+derived_data/clustering_results_%_7_4.csv \
+derived_data/clustering_results_%_8_0.csv \
+derived_data/clustering_results_%_8_1.csv \
+derived_data/clustering_results_%_8_2.csv \
+derived_data/clustering_results_%_8_3.csv \
+derived_data/clustering_results_%_8_4.csv \
+derived_data/clustering_results_%_9_0.csv \
+derived_data/clustering_results_%_9_1.csv \
+derived_data/clustering_results_%_9_2.csv \
+derived_data/clustering_results_%_9_3.csv \
+derived_data/clustering_results_%_9_4.csv \
+derived_data/clustering_results_%_10_0.csv \
+derived_data/clustering_results_%_10_1.csv \
+derived_data/clustering_results_%_10_2.csv \
+derived_data/clustering_results_%_10_3.csv \
+derived_data/clustering_results_%_10_4.csv: derived_data/clustering_data_%.csv \
+  .created-dirs \
+  do_spectral_clustering.py
+	python3 do_spectral_clustering.py -f $< -s $*
+	
+# Final clustering results for each year and averages
+# Using 4 clusters
 derived_data/clustering_results_%.csv: derived_data/clustering_data_%.csv \
   .created-dirs \
   do_spectral_clustering.py
-	python3 do_spectral_clustering.py -f $< -o $@
+	python3 do_spectral_clustering.py -f $< -s $* -n 9
+
+# Choose number of clusters based on mean normalized mutual information
+figures/n_clusters_mut_inf_%.png: .created-dirs \
+  derived_data/clustering_results_%_3_0.csv \
+  derived_data/clustering_results_%_3_1.csv \
+  derived_data/clustering_results_%_3_2.csv \
+  derived_data/clustering_results_%_3_3.csv \
+  derived_data/clustering_results_%_3_4.csv \
+  derived_data/clustering_results_%_4_0.csv \
+  derived_data/clustering_results_%_4_1.csv \
+  derived_data/clustering_results_%_4_2.csv \
+  derived_data/clustering_results_%_4_3.csv \
+  derived_data/clustering_results_%_4_4.csv \
+  derived_data/clustering_results_%_5_0.csv \
+  derived_data/clustering_results_%_5_1.csv \
+  derived_data/clustering_results_%_5_2.csv \
+  derived_data/clustering_results_%_5_3.csv \
+  derived_data/clustering_results_%_5_4.csv \
+  derived_data/clustering_results_%_6_0.csv \
+  derived_data/clustering_results_%_6_1.csv \
+  derived_data/clustering_results_%_6_2.csv \
+  derived_data/clustering_results_%_6_3.csv \
+  derived_data/clustering_results_%_6_4.csv \
+  derived_data/clustering_results_%_7_0.csv \
+  derived_data/clustering_results_%_7_1.csv \
+  derived_data/clustering_results_%_7_2.csv \
+  derived_data/clustering_results_%_7_3.csv \
+  derived_data/clustering_results_%_7_4.csv \
+  derived_data/clustering_results_%_8_0.csv \
+  derived_data/clustering_results_%_8_1.csv \
+  derived_data/clustering_results_%_8_2.csv \
+  derived_data/clustering_results_%_8_3.csv \
+  derived_data/clustering_results_%_8_4.csv \
+  derived_data/clustering_results_%_9_0.csv \
+  derived_data/clustering_results_%_9_1.csv \
+  derived_data/clustering_results_%_9_2.csv \
+  derived_data/clustering_results_%_9_3.csv \
+  derived_data/clustering_results_%_9_4.csv \
+  derived_data/clustering_results_%_10_0.csv \
+  derived_data/clustering_results_%_10_1.csv \
+  derived_data/clustering_results_%_10_2.csv \
+  derived_data/clustering_results_%_10_3.csv \
+  derived_data/clustering_results_%_10_4.csv \
+  n_clusters.R
+	Rscript n_clusters.R $*
 
 # Plot clustering results
 figures/clustered_plot_%.png: .created-dirs \
@@ -115,5 +207,6 @@ report.pdf: .created-dirs \
   figures/clustered_plot_2017.png \
   figures/clustered_plot_2019.png \
   figures/mut_inf_heatmap.png \
+  figures/n_clusters_mut_inf_2013.png \
   report.tex
 	pdflatex report.tex

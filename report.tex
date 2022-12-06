@@ -60,20 +60,28 @@ Before performing the PCA, I use imputation to deal with missing data. Where pos
 \includegraphics[width=0.5\linewidth]{./figures/clustered_plot_2017.png}
 \includegraphics[width=0.5\linewidth]{./figures/clustered_plot_2019.png}
 \caption{
-  Clustered state data by year for years 2011, 2013, 2015, 2017, and 2019. Because PCA was run indepently for each year, they are not plotted on the same coordinate plane. The color indicates cluster label. There is some evidence of the clusters making sense in two dimensions.
+  Clustered state data by year for years 2011, 2013, 2015, 2017, and 2019. The color indicates cluster label. There is some evidence of the clusters making sense in two dimensions.
 }
 \label{fig:clustered_data}
 \end{figure}
 
 \subsection{Clustering}
-The next step was to cluster the reduced data. I used the Spectral Clustering algorithm, which is typically robust to clusters not characterized by their centroids (and it was not clear that these were). Again, I did this for both the data averaged across years and for the five individual years worth of data. 
+The next step was to cluster the reduced data. I used the Spectral Clustering algorithm, which is typically robust to clusters not characterized by their centroids. Again, I did this for both the data averaged across years and for the five individual years worth of data. 
 
-Although there were not clear clusters from the two-dimensional representations, trial and error led me to use four clusters. The results of the clustering for the averages by state are displayed in \ref{fig:clustered_avgs} and for each in figure \ref{fig:clustered_data}. Although these plots only show the first two components, I used the first twenty for the clustering. There is some distinction between clusters in several of the plots, suggesting that the clustering worked, though it is not immediately apparent due to the loss of information from reducing to two dimensions.
+To determine the number of clusters to use, I plotted the mean normalized mutual information obtained from rerunning the clustering algorithm multiple times with different numbers of clusters (for example see Figure \ref{fig:n_clusters}. Using nine clusters, the clusters seemed reasonably stable. The results of the clustering for the averages by state are displayed in \ref{fig:clustered_avgs} and for each in figure \ref{fig:clustered_data}. There is some distinction between clusters in several of the plots, suggesting that the clustering worked, though it is not immediately apparent, possibly due to the loss of information from plotting only two dimensions.
+
+\begin{figure}[hp]
+\includegraphics[width=0.8\linewidth]{./figures/n_clusters_mut_inf_2013.png}
+\caption{
+  This plot shows the mean normalized mututal information of clusterings for 2013. It appears that using about nine clusters results in relatively stable clusterings. There were similar results for the other years and state averages. 
+}
+\label{fig:n_clusters}
+\end{figure}
 
 \subsection{Mutual Information}
 To assess whether the clusters changed over time, I used normalized mutual information. The mutual information between the clusterings for each year of interest are shown in figure \ref{fig:mut_inf}. The lighter color indicates higher mutual information. From this, it does look like years close to each other generally had higher mutual infomation (years 2011 and 2019 had particularly low mutual information). However, the scores never get above about 0.3, meaning there was a lot of variability between the clusters year to year. 
 
-\begin{figure}[htbp]
+\begin{figure}[hp]
 \includegraphics[width=0.8\linewidth]{./figures/mut_inf_heatmap.png}
 \caption{
   Normalized Mututal information of clusterings for each year. Lighter color indicates higher mutual information. Generally, it appears that years farther apart in time have lower mutual information (for example, 2011 and 2019), but the mutual information is never above about 0.3
