@@ -25,14 +25,13 @@ Figure \ref{fig:dems_by_time} shows how obesity rates have changed across the Un
 \includegraphics[width=.5\linewidth]{./figures/race_time_plt.png}
 \includegraphics[width=.5\linewidth]{./figures/edu_time_plt.png}
 \includegraphics[width=.5\linewidth]{./figures/age_time_plt.png}
-\caption{
-  National obesity rates by gender, income, race, education level, and age over time. There appears to be a recent shift toward higher obesity rates for women, Hawaiian/Pacific Islanders, and people with less than high school level of education. 
+\caption{\label{fig:dems_by_time}National obesity rates by gender, income, race, education level, and age over time. There appears to be a recent shift toward higher obesity rates for women, Hawaiian/Pacific Islanders, and people with less than high school level of education. 
 }
 \label{fig:dems_by_time}
 \end{figure}
 
 \subsection{Dimensionality Reduction}
-To see whether states are clustered by their behavioral risk factors, the first step was to use Principle Component Analysis (PCA) to understand which stratifications and questions explained most of the variation between states. As expected, the responses to many questions see, to be highly correlated, so about ninety percent of the variability was explained by the first thirty-eight components, which are what I used for clustering. The first two components are plotted in  \ref{fig:clustered_avgs} and \ref{fig:clustered_data}. The states move around year to year because each row of the data was identified by year and state, so for different years, states have different component vectors. It is interesting that most states appear not to move around too much, suggesting their principle components relative to the other states are fairly stable.
+To see whether states are clustered by their behavioral risk factors, the first step was to use Principle Component Analysis (PCA) to understand which stratifications and questions explained most of the variation between states. As expected, the responses to many questions see, to be highly correlated, so about ninety percent of the variability was explained by the first thirty-eight components, which are what I used for clustering. The first two components are plotted in Figures \ref{fig:clustered_avgs} and \ref{fig:clustered_data}. The states move around year to year because each row of the data was identified by year and state, so for different years, states have different component vectors. It is interesting that most states appear not to move around too much, suggesting their principle components relative to the other states are fairly stable.
 
 Before performing the PCA, I use imputation to deal with missing data. Where possible, I looked at each state and each demographics responses to each question by year, and imputed based on the responses to the other years.
 
@@ -60,7 +59,7 @@ The next step was to cluster the reduced data. I used Spectral Clustering, which
 
 To determine the number of clusters to use, I plotted the mean normalized mutual information obtained from rerunning the clustering algorithm multiple times with different numbers of clusters (e.g. Figure \ref{fig:n_clusters}). Using nine clusters, the clusters seemed reasonably stable. 
 
-The results of the clustering for the averages by state are displayed in Figure \ref{fig:clustered_avgs} and for each in Figure \ref{fig:clustered_data}. There is some distinction between clusters in several of the plots, though it is not immediately apparent, possibly due to the loss of information from plotting only two dimensions.
+The results of the clustering for the averages by state are displayed in Figure \ref{fig:clustered_avgs} and for each year in Figure \ref{fig:clustered_data}. There is some distinction between clusters in several of the plots, though it is not immediately apparent, possibly due to the loss of information from plotting only two dimensions.
 
 In Figure \ref{fig:clustered_data}, it is not obvious whether the clusters stay consistent over time. For example, Colorado and California are clustered together frequently, but Washington D.C. is clustered with different states each year. 
 
@@ -71,7 +70,7 @@ In Figure \ref{fig:clustered_data}, it is not obvious whether the clusters stay 
 \end{figure}
 
 \subsection{Mutual Information}
-To assess whether the clusters changed over time, I used normalized mutual information. The mutual information between the clusterings for each year of interest are shown in figure \ref{fig:mut_inf}. A lighter color indicates higher mutual information. From this, it does look like years close to each other generally had higher mutual infomation (years 2011 and 2019 had particularly low mutual information). However, the scores never get above about 0.5, meaning there was a lot of variability between the clusters year to year. 
+To assess whether the clusters changed over time, I used normalized mutual information. The mutual information between the clusterings for each year of interest are shown in Figure \ref{fig:mut_inf}. A lighter color indicates higher mutual information. From this, it does look like years close to each other generally had higher mutual infomation (years 2011 and 2019 had particularly low mutual information). However, the scores never get above about 0.5, meaning there was a lot of variability between the clusters year to year. 
 
 
 \begin{figure}[htbp]
