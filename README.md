@@ -2,7 +2,7 @@
 
 In this project, I explore the Nutrition, Physical Activity, and Obesity -- Behavioral Risk Factor Surveillance System dataset provided by the CDC (https://chronicdata.cdc.gov/Nutrition-Physical-Activity-and-Obesity/Nutrition-Physical-Activity-and-Obesity-Behavioral/hn4x-zwk7). This dataset contains responses to questions about diet and physical activity stratified by geographic and demographic information for adults in the US for the years 2011-2020.
 
-Questions I explore include: How do different states experience obesity and its risk factors? Are there groups of states with similar behaviors relating to nutrition and exercise? How has their weight status changed over time? Has the grouping changed over time? 
+Questions I explore include whether there are groups of states that have similar patterns related to weight status and obesity risk factors, and if this changes over time. 
 
 A copy of the dataset is included in the source_data directory.
 
