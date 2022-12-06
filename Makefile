@@ -41,6 +41,7 @@ figures/edu_time_plt.png: .created-dirs \
 	Rscript demographic_exploration.R
 	
 # Plot physical activity in NC with legislation 
+# Nothing stood out
 # Inputs are clean risk factor and legislation data
 # Outputs figure to figures direcotry
 figures/nc_phys_legislation.png: .created-dirs \
@@ -50,6 +51,7 @@ figures/nc_phys_legislation.png: .created-dirs \
 	Rscript nc_physical_activity_exploration.R
 	
 # Plot obesity in NC with legislation
+# Nothing stood out
 # Inputs are clean risk factor and legislation data
 # Outputs figure to figures directory
 figures/nc_obesity_leg.png: .created-dirs \
@@ -57,18 +59,6 @@ figures/nc_obesity_leg.png: .created-dirs \
   derived_data/clean_legislation.csv \
   nc_obesity_legislation_exploration.R
 	Rscript nc_obesity_legislation_exploration.R
-	
-# PCA and LM to predict obesity from stratifications
-# Inputs are clean risk factor data
-# Performs PCA and a linear model and outputs a plot of a significant component against obesity rate
-# Removed PCA for now, because may not return same results every time
-# Also runs a linear model without PCA, which showed many more significant variables, such has fruit consumption
-# Outputs plot of fruit consumption against obesity rate too 
-figures/perc_obesity_pca.png figures/perc_obesity_fruit.png: .created-dirs \
-  derived_data/clean_obesity_risk_factors.csv \
-  pca_exploration.R
-	Rscript pca_exploration.R
-	
 	
 # PCA 
 # Performs PCA starting with all questions. For states averaged across all years
