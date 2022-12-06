@@ -15,7 +15,7 @@
 \maketitle
 
 \subsection{Introduction}
-Over the course of ten years (2011-2020), the CDC conducted a nationwide survey assessing behavioral risk factors and obesity rates across demographic and geographic stratifications. In this analysis, I explore the aggregated results of this survey using the Nutrition, Physical Activity, and Obesity – Behavioral Risk Factor Surveillance System dataset provided by the CDC (https://chronicdata.cdc.gov/Nutrition-Physical-Activity-and-Obesity/Nutrition-Physical-Activity-and-Obesity-Behavioral/hn4x-zwk7). The question I investigate here is whether there are groups of states that have similar patterns related to weight status and obesity risk factors, and if this changes over time. 
+Over the course of ten years (2011-2020), the CDC conducted a nationwide survey assessing behavioral risk factors and obesity rates across demographic and geographic stratifications. In this analysis, I explore the aggregated results of this survey using the Nutrition, Physical Activity, and Obesity – Behavioral Risk Factor Surveillance System dataset provided by the CDC (https://chronicdata.cdc.gov/Nutrition-Physical-Activity-and-Obesity/Nutrition-Physical-Activity-and-Obesity-Behavioral/hn4x-zwk7). The questions I investigate here are whether there are groups of states that have similar patterns related to weight status and obesity risk factors, and if this changes over time. 
 
 \subsection{Demographic Overview}
 
@@ -25,17 +25,17 @@ Over the course of ten years (2011-2020), the CDC conducted a nationwide survey 
 \includegraphics[width=.5\linewidth]{./figures/race_time_plt.png}
 \includegraphics[width=.5\linewidth]{./figures/edu_time_plt.png}
 \includegraphics[width=.5\linewidth]{./figures/age_time_plt.png}
-\caption{National obesity rates by gender, income, race, education level, and age over time. There appears to be a recent shift toward higher obesity rates for women, Hawaiian/Pacific Islanders, and people with less than high school level of education. 
+\caption{National obesity rates over time. There appears to be a recent shift toward higher obesity rates for women, Hawaiian/Pacific Islanders, and people with less than high school level of education. 
 }
 \label{fig:dems_by_time}
 \end{figure}
 
-Figure \ref{fig:dems_by_time} shows how obesity rates have changed across the United States for the demographic stratifications outlined by the CDC. There are five stratification categories: age, education, gender, income, and race/ethnicity. Alarmingly, for nearly every population the obesity rate has increased. 
+Figure \ref{fig:dems_by_time} shows how obesity rates have changed across the United States for the demographic stratifications outlined by the CDC. There are five stratification categories: age, education, gender, income, and race/ethnicity. Alarmingly, for nearly every group the obesity rate has increased. 
 
 \subsection{Dimensionality Reduction}
 To see whether states are clustered by their behavioral risk factors, the first step was to use Principle Component Analysis (PCA) to understand which stratifications and questions explained most of the variation between states. As expected, the responses to many questions seem to be highly correlated, so about ninety percent of the variability was explained by the first thirty-eight components, which are what I used for clustering. The first two components are plotted in Figures \ref{fig:clustered_avgs} and \ref{fig:clustered_data}. The states move around year to year because each row of the data was identified by year and state, so for different years, states have different component vectors. It is interesting that most states appear not to move around too much, suggesting their principle components relative to the other states are fairly stable.
 
-Before performing the PCA, I use imputation to deal with missing data. Where possible, I looked at each state and each demographics responses to each question by year, and imputed based on the responses to the other years.
+Before performing the PCA, I used imputation to deal with missing data. Where possible, I looked at each state individually and each demographics responses to each question by year, and imputed based on the responses to the other years.
 
 
 \begin{figure}[htbp]
@@ -79,14 +79,14 @@ In Figure \ref{fig:clustered_data}, it is not obvious whether the clusters stay 
 
 \subsection{Mutual Information}
 
-To assess whether the clusters changed over time, I used normalized mutual information. The mutual information between the clusterings for each year of interest are shown in Figure \ref{fig:mut_inf}. A lighter color indicates higher mutual information. From this, it does look like years close to each other generally had higher mutual infomation (years 2011 and 2019 had particularly low mutual information). However, the scores never get above about 0.5, meaning there was a lot of variability between the clusters year to year. 
-
-\begin{figure}[htbp]
-\centering
+\begin{figure}[htb]
 \includegraphics[width=.6\linewidth]{./figures/mut_inf_heatmap.png}
 \caption{Normalized Mututal information of clusterings for each year. Lighter color indicates higher mutual information. Generally, it appears that years farther apart in time have lower mutual information (for example, 2011 and 2019), but the score is never above about 0.5.}
 \label{fig:mut_inf} 
 \end{figure}
+
+To assess whether the clusters changed over time, I used normalized mutual information. The mutual information between the clusterings for each year of interest are shown in Figure \ref{fig:mut_inf}. A lighter color indicates higher mutual information. From this, it does look like years close to each other generally had higher mutual infomation (years 2011 and 2019 had particularly low mutual information). However, the scores never get above about 0.5, meaning there was a lot of variability between the clusters year to year. 
+
 
 \subsection{Conclusion}
 We have presented some evidence that states are clustered by their behavioral risk factors for obesity, and that these clusters have changed over the past decade. Exploring these clusters further to find which states experienced trends or shifts could help guide policy and research efforts. The CDC also provides a dataset on legislation related to obesity risk factors over an overlapping period (https://chronicdata.cdc.gov/Nutrition-Physical-Activity-and-Obesity/CDC-Nutrition-Physical-Activity-and-Obesity-Legisl/nxst-x9p4), so it would be interesting to explore whether policy had a substantial effect these clusters and on states' behaviors. 
